@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  tron-gym-service:
+    build: .
+    # image: registry.gitlab.com/idgst/springboot-mongo-demo:latest
+    restart: always
+    container_name: tron-gym-rest-service
+    ports:
+      - 8083:8083
+    working_dir: /TronGymService
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:9.6-alpine
+    ports:
+      - '5432:5432'
+    container_name: postgres_items
+    environment:
+      POSTGRES_USER: 'tronAdmin'
+      POSTGRES_PASSWORD: 'tronlogics'
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d/
+    restart: always
