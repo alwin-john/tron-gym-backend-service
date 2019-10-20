@@ -9,7 +9,4 @@ public class UserRegistrationDto {
     private String phoneNo;
     private String emailId;
     private String name;
-    private String bloodGroup;
-    private int weight;
-    private int height;
 }

@@ -1,5 +1,6 @@
 package com.tron.gymservice.services;
 
+import com.tron.gymservice.dto.UserDeleteDto;
 import com.tron.gymservice.dto.UserPhysicalInfoDto;
 import com.tron.gymservice.dto.UserRegistrationDto;
 import com.tron.gymservice.entity.UserMasterInfo;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserMasterInfoServiceImpl implements UserMasterInfoService {
@@ -25,11 +27,16 @@ public class UserMasterInfoServiceImpl implements UserMasterInfoService {
     }
 
     @Override
-    public UserMasterInfo updatePhysicalInfo(long masterId,UserPhysicalInfoDto userPhysicalInfoDto) {
+    @Transactional
+    public UserMasterInfo updatePhysicalInfo(UserPhysicalInfoDto userPhysicalInfoDto) {
         String activityString = Optional.ofNullable(userPhysicalInfoDto.getActivities())
-                .map(a->a.stream().reduce("",(p,e)->p+","+e)).orElse("");
-        Optional<UserMasterInfo> userMasterInfo=userMasterInfoRepository.findById(masterId);
+                .map(a->a.stream().collect(Collectors.joining(","))).orElse("");
+        Optional<UserMasterInfo> userMasterInfo=userMasterInfoRepository
+                .findById(userPhysicalInfoDto.getUserId());
         userMasterInfo.ifPresent(u -> {
+            u.getUserPhysicalInfo().setHeight(userPhysicalInfoDto.getHeight());
+            u.getUserPhysicalInfo().setWeight(userPhysicalInfoDto.getWeight());
+            u.getUserPhysicalInfo().setBloodGroup(userPhysicalInfoDto.getBloodGroup());
             u.getUserPhysicalInfo().setActivities(activityString);
         });
         userMasterInfo.orElseThrow(MasterInfoNotFoundException::new);
@@ -40,18 +47,22 @@ public class UserMasterInfoServiceImpl implements UserMasterInfoService {
     @Transactional
     public UserMasterInfo save(UserRegistrationDto userRegistrationDto) {
         UserMasterInfo userMasterInfo=new UserMasterInfo();
-        UserPhysicalInfo userPhysicalInfo =new UserPhysicalInfo();
-       // userPhysicalInfo.setName(userRegistrationDto.getName());
-        userPhysicalInfo.setBloodGroup(userRegistrationDto.getBloodGroup());
-        userPhysicalInfo.setHeight(userRegistrationDto.getHeight());
-        userPhysicalInfo.setWeight(userRegistrationDto.getWeight());
-        //
+        UserPhysicalInfo userPhysicalInfo=new UserPhysicalInfo();
         userMasterInfo.setUserName(userRegistrationDto.getUserName());
         userMasterInfo.setPassword(userRegistrationDto.getPassword());
         userMasterInfo.setRoleId(1);
         userMasterInfo.setPhoneNo(userRegistrationDto.getPhoneNo());
         userMasterInfo.setEmailId(userRegistrationDto.getEmailId());
+        userMasterInfo.setUserPhysicalInfo(userPhysicalInfo);
         return userMasterInfoRepository.save(userMasterInfo);
+    }
+
+    @Override
+    public boolean delete(UserDeleteDto userDeleteDto) {
+        Optional<UserMasterInfo> userMasterInfo=userMasterInfoRepository
+                .findById(userDeleteDto.getId());
+        userMasterInfo.orElseThrow(MasterInfoNotFoundException::new);
+        return true;
     }
 
 }

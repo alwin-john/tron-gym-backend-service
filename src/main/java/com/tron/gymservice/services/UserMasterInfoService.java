@@ -1,5 +1,6 @@
 package com.tron.gymservice.services;
 
+import com.tron.gymservice.dto.UserDeleteDto;
 import com.tron.gymservice.dto.UserPhysicalInfoDto;
 import com.tron.gymservice.dto.UserRegistrationDto;
 import com.tron.gymservice.entity.UserMasterInfo;
@@ -12,7 +13,9 @@ import java.util.List;
 public interface UserMasterInfoService {
     public List<UserMasterInfo> findAll();
 
-    public UserMasterInfo updatePhysicalInfo(long masterId, UserPhysicalInfoDto userPhysicalInfoDto);
+    public UserMasterInfo updatePhysicalInfo(UserPhysicalInfoDto userPhysicalInfoDto);
 
     public UserMasterInfo save(UserRegistrationDto userRegistrationDto);
+
+    public boolean delete(UserDeleteDto userDeleteDto);
 }

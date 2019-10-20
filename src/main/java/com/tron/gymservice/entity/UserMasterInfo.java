@@ -20,7 +20,7 @@ public class UserMasterInfo {
     private String emailId;
     private int roleId;
     private long adminId;
-    @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "userPhysicalInfoId", referencedColumnName = "id")
     private UserPhysicalInfo userPhysicalInfo;
 }

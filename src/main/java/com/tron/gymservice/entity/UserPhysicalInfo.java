@@ -19,11 +19,9 @@ public class UserPhysicalInfo {
     private int fitnessPoint;
     private String activities;
     private String exerciseList;
-    @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL,mappedBy = "userPhysicalInfo")
+    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL,mappedBy = "userPhysicalInfo")
     private List<QandA> questions;
-    @OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "medicInfoId", referencedColumnName = "id")
     private UserMedicInfo userMedicInfo;
-//    @OneToOne(mappedBy = "user_physical_info")
-//    private UserMasterInfo userMasterInfo;
 }
