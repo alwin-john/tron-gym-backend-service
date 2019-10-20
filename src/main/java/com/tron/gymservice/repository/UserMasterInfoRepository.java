@@ -11,5 +11,6 @@ public interface UserMasterInfoRepository extends JpaRepository<UserMasterInfo,L
     @Override
     List<UserMasterInfo> findAll();
     UserMasterInfo findByUserName(String userName);
+    UserMasterInfo findById(String userName);
     UserMasterInfo save(UserMasterInfo userMasterInfo);
 }
