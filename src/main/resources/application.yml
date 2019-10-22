@@ -9,13 +9,10 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       use-new-id-generator-mappings: false
   datasource:
     dataSourceClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/tron_gym_db
     username: postgres
     password: postgres
-
-security:
-  ignored=/**:

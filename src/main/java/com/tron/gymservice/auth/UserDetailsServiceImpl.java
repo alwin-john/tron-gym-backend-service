@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserMasterInfo appUser = userMasterInfoRepository.findByUserName(username);
 
 
-        String password=encoder.encode("12345");
+        String password=encoder.encode(appUser.getPassword());
 
         if (appUser.getUserName().equals(username)) {
 

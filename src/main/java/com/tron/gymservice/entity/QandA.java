@@ -14,7 +14,7 @@ public class QandA {
     private long id;
     private String Question;
     private String Answer;
-    @ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinColumn(name = "physical_info_id")
     private UserPhysicalInfo userPhysicalInfo;
 }
