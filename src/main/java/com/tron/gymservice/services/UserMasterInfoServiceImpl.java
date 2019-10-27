@@ -3,7 +3,6 @@ package com.tron.gymservice.services;
 import com.tron.gymservice.dto.UserDeleteDto;
 import com.tron.gymservice.dto.UserPhysicalInfoDto;
 import com.tron.gymservice.dto.UserRegistrationDto;
-import com.tron.gymservice.entity.QandA;
 import com.tron.gymservice.entity.UserMasterInfo;
 import com.tron.gymservice.entity.UserMedicInfo;
 import com.tron.gymservice.entity.UserPhysicalInfo;
@@ -11,6 +10,8 @@ import com.tron.gymservice.exceptions.MasterInfoNotFoundException;
 import com.tron.gymservice.exceptions.UserAlredadyExistException;
 import com.tron.gymservice.repository.UserMasterInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +89,12 @@ public class UserMasterInfoServiceImpl implements UserMasterInfoService {
                 .findById(userDeleteDto.getId());
         userMasterInfo.orElseThrow(MasterInfoNotFoundException::new);
         return true;
+    }
+
+    @Override
+    public UserMasterInfo getUserDetails() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userMasterInfoRepository.findByUserName(auth.getName());
     }
 
 }

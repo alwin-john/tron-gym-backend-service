@@ -6,10 +6,7 @@ import com.tron.gymservice.services.UserMasterInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/api/v1/gym/")
@@ -18,6 +15,10 @@ public class EndUserController {
     @Autowired
     private UserMasterInfoService userMasterInfoService;
 
+    @GetMapping(value = "/user-info")
+    public ResponseEntity<?> getUserMasterData() {
+        return new ResponseEntity(userMasterInfoService.getUserDetails(), HttpStatus.OK);
+    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<?> saveUserMasterData(@RequestBody UserRegistrationDto userRegistrationDto) {

@@ -18,4 +18,6 @@ public interface UserMasterInfoService {
     public UserMasterInfo save(UserRegistrationDto userRegistrationDto, String role);
 
     public boolean delete(UserDeleteDto userDeleteDto);
+
+    public UserMasterInfo getUserDetails();
 }
