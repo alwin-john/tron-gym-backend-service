@@ -15,7 +15,7 @@ public interface UserMasterInfoService {
 
     public UserMasterInfo updatePhysicalInfo(UserPhysicalInfoDto userPhysicalInfoDto);
 
-    public UserMasterInfo save(UserRegistrationDto userRegistrationDto);
+    public UserMasterInfo save(UserRegistrationDto userRegistrationDto, String role);
 
     public boolean delete(UserDeleteDto userDeleteDto);
 }

@@ -10,17 +10,17 @@ import javax.persistence.*;
 @Data
 public class UserMasterInfo {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "userMasterIdSequence")
-    @SequenceGenerator(name = "userMasterIdSequence", sequenceName = "UserMasterId_SEQ",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userMasterIdSequence")
+    @SequenceGenerator(name = "userMasterIdSequence", sequenceName = "UserMasterId_SEQ", allocationSize = 1)
     private long id;
     private String userName;
     private String name;
-    private  String password;
+    private String password;
     private String phoneNo;
     private String emailId;
-    private int roleId;
+    private String role;
     private long adminId;
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "userPhysicalInfoId", referencedColumnName = "id")
     private UserPhysicalInfo userPhysicalInfo;
 }
